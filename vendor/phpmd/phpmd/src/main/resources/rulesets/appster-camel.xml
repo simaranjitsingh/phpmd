@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<ruleset name="Appster coding standards"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>
+        This ruleset contains all rules we follow in Appster
+    </description>
+
+    <rule name="ExcessiveMethodLength"
+          since="0.1"
+          message="The {0} {1}() has {2} lines of code. Current threshold is set to {3}. Avoid really long methods."
+          class="PHPMD\Rule\Design\LongMethod"
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivemethodlength">
+        <description>
+            Violations of this rule usually indicate that the method is doing
+            too much. Try to reduce the method size by creating helper methods and removing any copy/pasted code.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The method size reporting threshold" value="200"/>
+            <property name="ignore-whitespace" description="Count whitespace in reporting threshold" value="false"/>
+        </properties>
+        <example>
+            <![CDATA[
+            class Foo {
+            public function doSomething() {
+            print("Hello world!" . PHP_EOL);
+            print("Hello world!" . PHP_EOL);
+            // 98 copies omitted for brevity.
+            }
+            }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="ExcessiveClassLength"
+          since="0.1"
+          message="The class {0} has {1} lines of code. Current threshold is {2}. Avoid really long classes."
+          class="PHPMD\Rule\Design\LongClass"
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasslength">
+        <description>
+            Long Class files are indications that the class may be trying to
+            do too much. Try to break it down, and reduce the size to something
+            manageable.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The class size reporting threshold"  value="1000"/>
+            <property name="ignore-whitespace" description="Count whitespace in reporting threshold" value="false"/>
+        </properties>
+        <example>
+            <![CDATA[
+            class Foo {
+            public function bar() {
+            // 1000 lines of code
+            }
+            }
+            ]]>
+        </example>
+    </rule>
+
+
+    <rule name="ExcessiveParameterList"
+          since="0.1"
+          message="The {0} {1} has {2} parameters. Consider reducing the number of parameters to less than {3}."
+          class="PHPMD\Rule\Design\LongParameterList"
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveparameterlist">
+        <description>
+            Long parameter lists can indicate that a new object should be created to
+            wrap the numerous parameters.  Basically, try to group the parameters together.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The parameter count reporting threshold" value="10"/>
+        </properties>
+        <example>
+            <![CDATA[
+            class Foo {
+            public function addData(
+            $p0, $p1, $p2, $p3, $p4, $p5,
+            $p5, $p6, $p7, $p8, $p9, $p10) {
+            }
+            }
+            ]]>
+        </example>
+
+    </rule>
+
+    <rule name="PascalCaseClassName"
+          since="0.2"
+          message = "The class {0} is not named in CamelCase."
+          class="PHPMD\Rule\Controversial\PascalCaseClassName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+            It is considered best practice to use the Pascal notation to name classes.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+            class class_name {
+            }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="CamelCaseMethodName"
+          since="0.2"
+          message = "The method {0} is not named in camelCase."
+          class="PHPMD\Rule\Controversial\CamelCaseMethodName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+            It is considered best practice to use the camelCase notation to name methods.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="allow-underscore"
+                      description="Allow an optional, single underscore at the beginning."
+                      value="false" />
+            <property name="allow-underscore-test"
+                      description="Is it allowed to have underscores in test method names."
+                      value="false" />
+        </properties>
+        <example>
+            <![CDATA[
+            class ClassName {
+            public function get_name() {
+            }
+            }
+            ]]>
+        </example>
+    </rule>
+
+
+    <rule name="CamelCaseVariableName"
+          since="0.2"
+          message = "The variable {0} is not in camelCase"
+          class="PHPMD\Rule\Controversial\CamelCaseVariableName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+            It is considered best practice to use the camelCase notation to name variables.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+            class ClassName {
+            public function doSomething() {
+            $data_module = new DataModule();
+            }
+            }
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="ConstantNamingConventions"
+          since="0.2"
+          message="Constant {0} should be defined in uppercase"
+          class="PHPMD\Rule\Naming\ConstantNamingConventions"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#constantnamingconventions">
+        <description>
+            Class/Interface constant names should always be defined in uppercase.
+        </description>
+        <priority>4</priority>
+        <properties />
+        <example>
+            <![CDATA[
+            class Foo {
+            const MY_NUM = 0; // ok
+            const myTest = ""; // fail
+            }
+            ]]>
+        </example>
+    </rule>
+        <rule name="UnusedPrivateField"
+          since="0.2"
+          message="Avoid unused private fields such as '{0}'."
+          class="PHPMD\Rule\UnusedPrivateField"
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield">
+        <description>
+Detects when a private field is declared and/or assigned a value, but not used.
+        </description>
+        <priority>3</priority>
+        <example>
+<![CDATA[
+class Something
+{
+    private static $FOO = 2; // Unused
+    private $i = 5; // Unused
+    private $j = 6;
+    public function addOne()
+    {
+        return $this->j++;
+    }
+}
+]]>
+        </example>
+    </rule>
+
+    <rule name="UnusedLocalVariable"
+          since="0.2"
+          message="Avoid unused local variables such as '{0}'."
+          class="PHPMD\Rule\UnusedLocalVariable"
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable">
+        <description>
+Detects when a local variable is declared and/or assigned, but not used.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property
+                    name="allow-unused-foreach-variables"
+                    description="Allow unused variables in foreach language constructs."
+                    value="false" />
+        </properties>
+        <example>
+<![CDATA[
+class Foo {
+    public function doSomething()
+    {
+        $i = 5; // Unused
+    }
+}
+]]>
+        </example>
+    </rule>
+
+    <rule name="UnusedPrivateMethod"
+          since="0.2"
+          message="Avoid unused private methods such as '{0}'."
+          class="PHPMD\Rule\UnusedPrivateMethod"
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatemethod">
+        <description>
+Unused Private Method detects when a private method is declared but is unused.
+        </description>
+        <priority>3</priority>
+        <example>
+<![CDATA[
+class Something
+{
+    private function foo() {} // unused
+}
+]]>
+        </example>
+    </rule>
+
+    <rule name="UnusedFormalParameter"
+          since="0.2"
+          message="Avoid unused parameters such as '{0}'."
+          class="PHPMD\Rule\UnusedFormalParameter"
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter">
+        <description>
+Avoid passing parameters to methods or constructors and then not using those parameters.
+        </description>
+        <priority>3</priority>
+        <example>
+<![CDATA[
+class Foo
+{
+    private function bar($howdy)
+    {
+        // $howdy is not used
+    }
+}
+]]>
+        </example>
+    </rule>
+
+
+</ruleset>
